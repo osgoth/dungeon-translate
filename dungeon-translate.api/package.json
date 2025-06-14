@@ -1,0 +1,48 @@
+{
+  "name": "legato.api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/app.js",
+    "build": "tsc --outDir dist",
+    "dev": "tsx watch src/app.ts",
+    "console": "tsx src/presentation/client/console.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@stylistic/eslint-plugin": "^4.4.1",
+    "@stylistic/eslint-plugin-ts": "^4.4.1",
+    "@types/cors": "^2.8.18",
+    "@types/debug": "^4.1.12",
+    "@types/express": "^5.0.2",
+    "@types/helmet": "^0.0.48",
+    "@types/node": "^22.15.29",
+    "@typescript-eslint/eslint-plugin": "^8.33.1",
+    "@typescript-eslint/parser": "^8.33.1",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1",
+    "winston": "^3.17.0"
+  },
+  "dependencies": {
+    "@types/prompt-sync": "^4.2.3",
+    "@types/socket.io": "^3.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "guid-typescript": "^1.0.9",
+    "helmet": "^8.1.0",
+    "http": "^0.0.1-security",
+    "prompt-sync": "^4.2.0",
+    "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "tsyringe": "^4.10.0"
+  }
+}

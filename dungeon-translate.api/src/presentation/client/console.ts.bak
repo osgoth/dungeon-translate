@@ -1,0 +1,76 @@
+import { io } from "socket.io-client";
+const socket = io("http://localhost:3000");
+import prompt  from "prompt-sync";
+import { RoomEvents } from "../../domain/aggregates/room/room.events";
+
+class MessageQueue {
+  constructor() {
+    this.queue = [];
+  }
+  private queue: string[];
+
+  public enqueue(message: string): void {
+    this.queue.push(message);
+  }
+
+  public pop(): string {
+    const message = this.queue.shift();
+    return message!;
+  }
+
+  public isEmpty(): boolean {
+    return this.queue.length === 0;
+  }
+
+}
+
+const messages = new MessageQueue();
+
+
+socket.on("connect", () => {
+  console.log("connected to server");
+  socket.on("disconnect", () => {
+    console.log("disconnected");
+  });
+
+  socket.on(RoomEvents.ReceiveMessage, (data) => {
+    const { userId, message } = data;
+    messages.enqueue(message);
+    console.log(`[${userId}]:`, message);
+  });
+
+
+  // Listen for user joined
+  socket.on(RoomEvents.UserJoined, (data) => {
+    console.log("User joined:", data.userId);
+  });
+
+  // Leave a room
+  function leaveRoom(roomName: string) {
+    socket.emit(RoomEvents.LeaveRoom, roomName);
+  }
+
+  // Listen for user left
+  socket.on(RoomEvents.UserLeft, (data) => {
+    console.log("User left:", data.userId);
+  });
+});
+
+const sendMessage = (userId: string, message: string, roomId: string) => {
+  socket.emit(RoomEvents.SendMessage, { userId: userId, message: message, roomName: roomId  });
+};
+
+const inp = prompt();
+
+const roomName = inp("Enter the room name to join: ");
+socket.emit(RoomEvents.JoinRoom, roomName);
+
+do {
+  const msg = inp("Type a message: ");
+  sendMessage("alex", msg, roomName);
+  if (!messages.isEmpty) {
+    console.log(messages.pop());
+  }
+} while (msg != "exit");
+
+
