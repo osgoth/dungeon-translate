@@ -22,12 +22,6 @@ const LoginPage = () => {
   useEffect(() => {
   }, []);
 
-  const setFormatLanguages = (languagesRaw: Record<"value" | "label", string>[]) => {
-    const langs = languagesRaw.map(lang => {
-      return lang.value;
-    });
-    setLanguagesKnown(langs);
-  };
 
   const handleLogin = () => {
 
@@ -71,7 +65,7 @@ const LoginPage = () => {
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="password">Languages</Label>
-                  <LanguageMultiSelect setFormatLanguages={setFormatLanguages}/>
+                  <LanguageMultiSelect setFormatLanguages={setLanguagesKnown}/>
                 </div>
                 <div className="flex flex-col gap-3">
                   <Button onClick={handleLogin} className="w-full">

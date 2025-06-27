@@ -16,7 +16,7 @@ const Message: React.FC<MessageProps> = ({message, dict, isTranslated }) => {
   const [translated, setTranslated] = useState(isTranslated);
 
   return (
-    <>
+    <p className="text-left text-s font-light">
       {
         !translated?
           message
@@ -37,7 +37,7 @@ const Message: React.FC<MessageProps> = ({message, dict, isTranslated }) => {
       >
         Translate
       </Button> */}
-    </>
+    </p>
   );
 };
 export default Message;

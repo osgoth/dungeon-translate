@@ -5,64 +5,36 @@ import { Command as CommandPrimitive } from "cmdk";
 import { X } from "lucide-react";
 
 
-type Language = Record<"value" | "label", string>;
 
 interface LanguageMultiSelectProps {
-    setFormatLanguages: (languagesRaw: Record<"value" | "label", string>[]) => void
+  setFormatLanguages: (languagesRaw: string[]) => void
 }
 
 const Languages = [
-  {
-    value: "Dwarvish",
-    label: "Dwarvish",
-  },
-  {
-    value: "Elvish",
-    label: "Elvish",
-  },
-  {
-    value: "Giant",
-    label: "Giant",
-  },
-  {
-    value: "Gnomish",
-    label: "Gnomish",
-  },
-  {
-    value: "Goblin",
-    label: "Goblin",
-  },
-  {
-    value: "Halfling",
-    label: "Halfling",
-  },
-  {
-    value: "Orc",
-    label: "Orc",
-  },
-  {
-    value: "Draconic",
-    label: "Draconic",
-  },
-  {
-    value: "Infernal",
-    label: "Infernal",
-  },
-] satisfies Language[];
+  "Dwarvish",
+  "Elvish",
+  "Giant",
+  "Gnomish",
+  "Goblin",
+  "Halfling",
+  "Orc",
+  "Draconic",
+  "Infernal",
+];
 
 const LanguageMultiSelect = (props: LanguageMultiSelectProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Language[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     props.setFormatLanguages(selected);
   }, [selected]);
 
-  const handleUnselect = useCallback((language: Language) => {
-    setSelected((prev) => { return prev.filter((s) => { return s.value !== language.value; }); });
+  const handleUnselect = useCallback((language: string) => {
+    setSelected((prev) => { return prev.filter((s) => { return s !== language; }); });
   }, []);
 
   const handleKeyDown = useCallback(
@@ -101,10 +73,10 @@ const LanguageMultiSelect = (props: LanguageMultiSelectProps) => {
         <div className="flex flex-wrap gap-1">
           {selected.map((language) => {
             return (
-              <Badge key={language.value} variant="secondary" className={"cursor-pointer"}
+              <Badge key={language} variant="secondary" className={"cursor-pointer"}
                 onClick={() => {return handleUnselect(language);}}
               >
-                {language.label}
+                {language}
                 <button
                   className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
@@ -142,7 +114,7 @@ const LanguageMultiSelect = (props: LanguageMultiSelectProps) => {
                 {selectables.map((language) => {
                   return (
                     <CommandItem
-                      key={language.value}
+                      key={language}
                       onMouseDown={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -153,7 +125,7 @@ const LanguageMultiSelect = (props: LanguageMultiSelectProps) => {
                       }}
                       className={"cursor-pointer"}
                     >
-                      {language.label}
+                      {language}
                     </CommandItem>
                   );
                 })}

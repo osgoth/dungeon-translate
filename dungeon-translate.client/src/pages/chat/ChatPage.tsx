@@ -12,6 +12,7 @@ import { io } from "socket.io-client";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
 import { SendHorizonalIcon } from "lucide-react";
 import LanguageSelect from "./components/LanguageSelectComponent";
+import { Input } from "../../components/ui/input";
 
 const socket = io("http://localhost:3000");
 
@@ -51,8 +52,17 @@ const ChatPage = () => {
 
   }, []);
 
+  useEffect(() => {
+    const textarea = document.querySelector("textarea");
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }, [message]);
 
-  const submitMessage = () => {
+
+  const submitMessage = (event: any) => {
+    event.preventDefault();
     socket.emit(RoomEvents.SendMessage, {
       userName: user.userName,
       message: message,
@@ -60,6 +70,7 @@ const ChatPage = () => {
       timestamp: new Date().toISOString(),
       language: "pseudo"
     });
+    setMessage("");
 
   };
 
@@ -83,12 +94,6 @@ const ChatPage = () => {
                     key={index}
                     className={`flex items-end gap-3 ${isCurrentUser ? "justify-end" : "justify-start"}`}
                   >
-                    {/* Avatar for OTHER users */}
-                    {!isCurrentUser && (
-                      <div className="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full items-center justify-center bg-gray-200 dark:bg-gray-700">
-                        {msg.userName.charAt(0).toUpperCase()}
-                      </div>
-                    )}
 
                     {/* Message bubble */}
                     <div className={`flex flex-col space-y-1 max-w-xs md:max-w-md`}>
@@ -99,23 +104,21 @@ const ChatPage = () => {
                             : "bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-50 rounded-bl-none"
                         }`}
                       >
-                        <p >
-                          <Message
-                            message={msg.message}
-                            dict={dict}
-                            isTranslated={msg.isTranslated}
-                          />
-                        </p>
+                        <span
+                          className="text-left text-xs"
+                        >
+                          {msg.userName}
+                        </span>
+                        <Message
+                          message={msg.message}
+                          dict={dict}
+                          isTranslated={msg.isTranslated}
+                        />
                         <span className={`text-xs text-gray-500 dark:text-gray-400 ${isCurrentUser ? "text-right" : "text-left"}`}>
-                          {msg.userName} - {new Date(msg.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          {new Date(msg.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                         </span>
                       </div>
-                      {/* Avatar for the CURRENT user */}
-                      {isCurrentUser && (
-                        <div className="elative flex h-8 w-8 shrink-0 overflow-hidden rounded-full items-center justify-center bg-gray-200 dark:bg-gray-700">
-                          {user.userName.charAt(0).toUpperCase()}
-                        </div>
-                      )}
+
                     </div>
                   </div>
                 );
@@ -123,24 +126,29 @@ const ChatPage = () => {
             </div>
           </CardContent>
 
-          <div>
-            <CardFooter className="p-0 border-0 dark:border-gray-800 bg-gray-10 border-bl-0">
-              <LanguageSelect />
+          <form>
+            <CardFooter className="p-0 border-1 dark:border-gray-800 bg-gray-10 border-bl-1 rounded-t-lg">
               <div className="flex w-full items-center space-x-2">
                 <Textarea
-                  className="flex-1 resize-none min-h-[40px] w-full rounded-tl-lg border border-gray-200 px-3 py-2 text-sm placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:focus-visible:ring-gray-600 disabled:cursor-not-allowed"
+                  className="flex-1 min-h-0 w-full rounded-lg px-3 py-2 text-sm placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-0 disabled:cursor-not-allowed resize-y"
                   value={message}
                   onChange={(e) => {return setMessage(e.target.value);}}
                   placeholder="Type your message here."
                 />
+                <LanguageSelect />
 
-                <ButtonTextArea onClick={submitMessage}
-                  className="">
-                  <SendHorizonalIcon />
-                </ButtonTextArea>
+
+                <Input onClick={submitMessage}
+                  type="submit"
+                  className="rounded-full font-lg items-center justify-center h-10 w-10 mr-2 hover:bg-gray-100 "
+                  placeholder="=>"
+                  value=">"
+                >
+                  {/* <SendHorizonalIcon /> */}
+                </Input>
               </div>
             </CardFooter>
-          </div>
+          </form>
 
 
         </Card >
