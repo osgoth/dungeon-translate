@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "RedactedScript";
+    src: url("./redacted-script/webfonts/redacted-script-latin-300-normal.woff") format("woff"),
+        url("./redacted-script/webfonts/redacted-script-latin-300-normal.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Infernal";
+    src: url("./daedra/otf/Daedra.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Draconic";
+    src: url("./draconic/DND5EDraconicScript.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Dwarvish";
+    src: url("./dwarvish/DwarfRunes.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Elvish";
+    src: url("./elvish/Espruar.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

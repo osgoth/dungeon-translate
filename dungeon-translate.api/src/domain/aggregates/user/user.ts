@@ -1,7 +1,13 @@
-import { Guid } from "guid-typescript";
+import { Role } from "./roles";
 
 export interface User {
-  profileName: string;
-  userId: Guid;
+  userName: string;
   languages: string[];
+  password: string;
+  role: Role;
+}
+
+export interface UserLogin {
+  userName: string;
+  password: string;
 }

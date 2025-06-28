@@ -14,5 +14,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: "./"
+  base: "./",
+  server: {
+    allowedHosts: true
+  }
 });

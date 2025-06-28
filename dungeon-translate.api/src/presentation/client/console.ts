@@ -92,9 +92,11 @@ async function promptUser(): Promise<void> {
         roomName
       });
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error("Error in prompt sequence:", error);
-  } finally {
+  }
+  finally {
     // Ensure readline is closed
     rl.close();
   }

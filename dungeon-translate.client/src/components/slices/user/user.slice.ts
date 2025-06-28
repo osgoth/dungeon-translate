@@ -4,13 +4,17 @@ export interface UserState {
   userName: string;
   roomNumber: string;
   languages: string[];
+  _id: string;
+  role: string;
 }
 
 
 const initialState: UserState = {
   userName: " ",
   roomNumber: "",
-  languages: []
+  languages: [],
+  _id: "",
+  role: ""
 };
 
 
@@ -20,6 +24,12 @@ export const userSlice = createSlice({
   reducers: {
     setUserName: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
+    },
+    setUserId: (state, action: PayloadAction<string>) => {
+      state._id = action.payload;
+    },
+    setUserRole: (state, action: PayloadAction<string>) => {
+      state.role = action.payload;
     },
     setRoomNumber: (state, action: PayloadAction<string>) => {
       state.roomNumber = action.payload;
@@ -37,6 +47,8 @@ export const userSlice = createSlice({
 });
 
 export const {
+  setUserId,
+  setUserRole,
   setUserName,
   setRoomNumber,
   addLanguage,

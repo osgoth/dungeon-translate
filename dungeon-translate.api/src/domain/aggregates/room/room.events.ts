@@ -4,5 +4,7 @@ export enum RoomEvents {
     JoinRoom = "joinRoom",
     LeaveRoom = "leaveRoom",
     SendMessage = "sendMessage",
-    ReceiveMessage = "receiveMessage"
+    ReceiveMessage = "receiveMessage",
+    TranslateMessage = "translateMessage",
+    TranslateMessageBroadcast = "translateMessageBroadcast"
 }

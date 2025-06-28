@@ -1,7 +1,6 @@
 "use client";
 
-import * as React from "react";
-
+import React, { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,22 +11,40 @@ import {
   DropdownMenuTrigger
 } from "../../../components/ui/dropdown-menu";
 import { Button } from "../../../components/ui/button";
+import { BookA } from "lucide-react";
 
-const LanguageSelect = () => {
-  const [position, setPosition] = React.useState("bottom");
+interface LanguageSelectProps {
+  languages: string[];
+  chooseLanguage: (lang: string) => void;
+}
+
+
+const LanguageSelect = ({ languages, chooseLanguage }: LanguageSelectProps) => {
+
+  const [language, setLanguage] = useState("pseudo");
+
+  useEffect(() => {
+    chooseLanguage(language);
+  }, [language]);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">
+          <BookA />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+        <DropdownMenuLabel>Choose language</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+        <DropdownMenuRadioGroup value={language} onValueChange={setLanguage}>
+          {
+            languages.map((lang, index) => {
+              return <div key={index}>
+                <DropdownMenuRadioItem value={lang}>{lang}</DropdownMenuRadioItem>
+              </div>;
+            })
+          }
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

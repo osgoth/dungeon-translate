@@ -3,26 +3,25 @@ import { Command, CommandGroup, CommandItem, CommandList } from "../../../compon
 import { Badge } from "../../../components/ui/badge";
 import { Command as CommandPrimitive } from "cmdk";
 import { X } from "lucide-react";
-
+import axios from "axios";
+import env from "../../../config/app.config";
 
 
 interface LanguageMultiSelectProps {
   setFormatLanguages: (languagesRaw: string[]) => void
 }
 
-const Languages = [
-  "Dwarvish",
-  "Elvish",
-  "Giant",
-  "Gnomish",
-  "Goblin",
-  "Halfling",
-  "Orc",
-  "Draconic",
-  "Infernal",
-];
 
 const LanguageMultiSelect = (props: LanguageMultiSelectProps) => {
+  useEffect(() => {
+    axios.get(`${env.apiUrl}/api/language`).then(
+      (resp) => {
+        setLanguages(resp.data["data"]);
+      }
+    );
+  }, []);
+
+  const [languages, setLanguages] = useState<string[]>([""]);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
@@ -59,7 +58,7 @@ const LanguageMultiSelect = (props: LanguageMultiSelectProps) => {
     [],
   );
 
-  const selectables = Languages.filter(
+  const selectables = languages!.filter(
     (language) => {return !selected.includes(language);},
   );
 
